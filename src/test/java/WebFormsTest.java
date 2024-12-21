@@ -24,6 +24,7 @@ public class WebFormsTest {
         });
         driver.findElement(By.xpath("//input[@value = 'yellow']")).click();
         driver.findElement(By.xpath("//select[@id = 'fruit-selects']")).click();
+        driver.findElement(By.xpath("//select[@id = 'fruit-selects']//option[@disabled = 'disabled']"));
         driver.quit();
     }
 }

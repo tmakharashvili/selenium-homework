@@ -8,12 +8,14 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import steps.FourthHomeworkSteps;
+import utils.SetUpClass;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.time.Duration;
 
-public class FourthHomework {
+public class FourthHomework extends SetUpClass {
     @Test
     public static void assertsUsage() {
         WebDriver driver = new ChromeDriver();
@@ -27,7 +29,8 @@ public class FourthHomework {
 
                     String cellText2 = driver.findElement(By.xpath("//table[\"table1\"]/tbody/tr[" +
                     numberOfRows + "]/td[2]")).getText();
-            String cellText4 = driver.findElement(By.xpath("//table[\"table1\"]/tbody/tr[" +
+
+                    String cellText4 = driver.findElement(By.xpath("//table[\"table1\"]/tbody/tr[" +
                     numberOfRows + "]/td[4]")).getText();
 
             System.out.println(cellText2 + " " + cellText4);
@@ -38,17 +41,13 @@ public class FourthHomework {
         }
         @Test
         public static void actionClasses() {
-            WebDriver driver = new ChromeDriver();
-            Actions actions = new Actions(driver);
 
             driver.get("https://demoqa.com/tool-tips");
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-            WebElement tipBox = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("toolTipButton")));
+            FourthHomeworkSteps fourthHomeworkSteps = new FourthHomeworkSteps();
 
-            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", tipBox);
-            actions.moveToElement(tipBox).perform();
-            WebElement tipText = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("tooltip-inner")));
-            Assert.assertTrue(tipText.isDisplayed());
+            fourthHomeworkSteps.moveToTipBox();
+            fourthHomeworkSteps.checkTollTipText();
+
 
             driver.quit();
         }

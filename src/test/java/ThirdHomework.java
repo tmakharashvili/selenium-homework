@@ -6,37 +6,38 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import steps.ThirdHomeworkSteps;
+import utils.SetUpClass;
 
 import java.util.List;
 
-public class ThirdHomework {
+public class ThirdHomework extends SetUpClass {
     @Test
     public static void assertsUsage() {
-        WebDriver driver = new ChromeDriver();
+
         driver.get("https://the-internet.herokuapp.com/infinite_scroll");
+        ThirdHomeworkSteps thirdHomeworkSteps = new ThirdHomeworkSteps();
 
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-
-        for (int i = 0; i < 3; i++) {
-            js.executeScript("scrollBy(0, 500);");
-        }  //აქ ვერ ჩავსვი ყველა სქროლის შემდეგ ასერტი
-
+        thirdHomeworkSteps.scrollPage3times();
 
         driver.navigate().to("https://demoqa.com/text-box");
 
-        WebElement element = driver.findElement(By.id("submit"));
+
+        WebElement submit = driver.findElement(By.id("submit"));
         JavascriptExecutor jS = (JavascriptExecutor) driver;
-        jS.executeScript("arguments[0].scrollIntoView(true);", element);
-        Assert.assertTrue(element.isDisplayed());
-        boolean active = element.isEnabled();
+        jS.executeScript("arguments[0].scrollIntoView(true);", submit);
+
+        Assert.assertTrue(submit.isDisplayed());
+        boolean active = submit.isEnabled();
 
 
         driver.navigate().to("https://www.selenium.dev/");
-        JavascriptExecutor jScript = (JavascriptExecutor) driver;
-        jScript.executeScript("window.scrollTo(0, document.body.scrollHeight);");
 
-        WebElement footer = driver.findElement(By.xpath("/html/body/div/footer"));
-        Assert.assertTrue(footer.isDisplayed());
+        thirdHomeworkSteps.scrollPage();
+        thirdHomeworkSteps.footerIsVisible();
+
+     //   WebElement footer = driver.findElement(By.xpath("/html/body/div/footer"));
+     //   Assert.assertTrue(footer.isDisplayed());
 
         driver.quit();
         }

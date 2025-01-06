@@ -6,25 +6,23 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import steps.WaitsSteps;
+import utils.SetUpClass;
 
 import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 
-public class WaitsTest {
+public class WaitsTest extends SetUpClass {
     @Test
     public static void mySecondTest(){
-        WebDriver driver = new ChromeDriver();
         driver.get("https://demoqa.com/progress-bar");
-        driver.findElement(By.xpath("//button[@id='startStopButton']")).click();
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-        wait.until(ExpectedConditions.visibilityOfElementLocated
-                (By.xpath("//div[@role='progressbar' and @aria-valuenow='100']")));
+        WaitsSteps waitsSteps = new WaitsSteps();
 
-
-        WebElement progressBar = driver.findElement(By.xpath("//div[@role='progressbar']"));
-        String progressValue = progressBar.getAttribute("aria-valuenow");
-        Assert.assertEquals("100",progressValue);
+        waitsSteps.clickStartButton();
+        waitsSteps.waitFor100();
+        waitsSteps.checkprogressBar();
 
         driver.quit();
     }
